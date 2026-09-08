@@ -18,3 +18,17 @@ $(function () {
   });
 
 });
+
+// Background slideshow (フェード切替)
+document.addEventListener('DOMContentLoaded', function() {
+  const slides = Array.from(document.querySelectorAll('#bg-slideshow .slide'));
+  if (!slides.length) return;
+  let idx = 0;
+  slides[idx].classList.add('active');
+  const interval = 6000; // ミリ秒：各スライドの表示時間
+  setInterval(() => {
+    slides[idx].classList.remove('active');
+    idx = (idx + 1) % slides.length;
+    slides[idx].classList.add('active');
+  }, interval);
+});
