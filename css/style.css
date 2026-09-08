@@ -18,17 +18,26 @@ body {
 .bg-video video {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  z-index: -2;
   filter: blur(6px);
   transform: scale(1.05);
 }
 
 .wrapper {
+.bg-video::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: rgba(0, 0, 0, .28);
+}
+
   position: relative;
+  width: 100%;
   z-index: 1;
 }
 
 a {
+  display: block;
   transition: opacity .3s;
   text-decoration: none;
   color: #1ca9e3;
