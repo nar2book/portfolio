@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Private page | hato</title>
+  <title>🔐</title>
   <style>
     body {
       max-width: 900px;
@@ -14,12 +14,24 @@
       color: #fff;
       background: #111;
     }
+    .myVideo {
+      display: block;
+      width: min(640px, 100%);
+      height: auto;
+      margin: 0 auto;
+    }
+    @media screen and (max-width: 767px) {
+      .myVideo {
+        width: 100vw;
+        max-width: none;
+        margin-left: calc(50% - 50vw);
+      }
+    }
   </style>
 </head>
 <body>
   <main>
-    <h1>Private page</h1>
-    <p>認証が完了しました。このページに公開したい内容を追加してください。</p>
+<video src="img/priv.mp4" controls autoplay muted class="myVideo"></video>
   </main>
   <script>
     if (sessionStorage.getItem('yamiyami-authenticated') !== 'true') {
