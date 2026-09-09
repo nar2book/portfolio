@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /login.html
+Disallow: /yamiyami.html
+
+Sitemap: https://forcework.net/sitemap.xml
