@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>パスワード認証 | hato</title>
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    body {
+      display: grid;
+      min-height: 100svh;
+      margin: 0;
+      place-items: center;
+      font-family: "Montserrat", "Hiragino Sans", Meiryo, sans-serif;
+      color: #fff;
+      background: #111;
+    }
+    .login-card {
+      width: min(100% - 40px, 420px);
+      padding: 40px;
+      border: 1px solid rgba(255, 255, 255, .2);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, .08);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, .35);
+    }
+    h1 { margin: 0 0 12px; font-size: 28px; }
+    p { margin: 0 0 24px; line-height: 1.7; }
+    label { display: block; margin-bottom: 8px; font-size: 14px; }
+    input, button { width: 100%; font: inherit; }
+    input {
+      padding: 12px;
+      border: 1px solid rgba(255, 255, 255, .35);
+      border-radius: 8px;
+      color: #fff;
+      background: rgba(0, 0, 0, .2);
+    }
+    button {
+      margin-top: 16px;
+      padding: 12px;
+      border: 0;
+      border-radius: 8px;
+      cursor: pointer;
+      color: #111;
+      background: #fff;
+      font-weight: bold;
+    }
+    #message { min-height: 1.7em; margin: 14px 0 0; font-size: 14px; }
+    #message[aria-live] { color: #ffb4b4; }
+  </style>
+</head>
+<body>
+  <main class="login-card">
+    <h1>Private page</h1>
+    <p>パスワードを入力してください。</p>
+    <form id="login-form">
+      <label for="password">パスワード</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" required autofocus>
+      <button type="submit">認証する</button>
+      <p id="message" aria-live="polite"></p>
+    </form>
+  </main>
+  <script>
+    const passwordHash = 'e7d8c4fc543a501aef50cb871fa8d2da28125daeea1ccc5e742321800bced606';
+    const form = document.getElementById('login-form');
+    const message = document.getElementById('message');
+
+    async function hashPassword(value) {
+      const buffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(value));
+      return Array.from(new Uint8Array(buffer), byte => byte.toString(16).padStart(2, '0')).join('');
+    }
+
+    form.addEventListener('submit', async function (event) {
+      event.preventDefault();
+      const hash = await hashPassword(form.password.value);
+
+      if (hash === passwordHash) {
+        sessionStorage.setItem('yamiyami-authenticated', 'true');
+        window.location.href = 'yamiyami.html';
+        return;
+      }
+
+      message.textContent = 'パスワードが違います。';
+      form.password.select();
+    });
+  </script>
+</body>
+</html>

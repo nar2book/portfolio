@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Private page | hato</title>
+  <style>
+    body {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 80px 24px;
+      font-family: "Montserrat", "Hiragino Sans", Meiryo, sans-serif;
+      line-height: 1.8;
+      color: #fff;
+      background: #111;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Private page</h1>
+    <p>認証が完了しました。このページに公開したい内容を追加してください。</p>
+  </main>
+  <script>
+    if (sessionStorage.getItem('yamiyami-authenticated') !== 'true') {
+      window.location.replace('login.html');
+    }
+  </script>
+</body>
+</html>

@@ -19,7 +19,7 @@ $(function () {
 
 });
 
-// Background slideshow (フェード切替)
+// Background slideshow (フェード切替)←結局使ってない
 document.addEventListener('DOMContentLoaded', function() {
   const slides = Array.from(document.querySelectorAll('#bg-slideshow .slide'));
   if (!slides.length) return;
