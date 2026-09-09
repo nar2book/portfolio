@@ -55,14 +55,6 @@ img {
   border-style: none;
 }
 
-.yajyuusenpai {
-  
-}
-
-.pc-only {
-  display: block;
-}
-
 .sp-only {
   display: none;
 }
@@ -80,6 +72,16 @@ img {
 
 .section:nth-of-type(odd) {
   background-color: #f7f7f7;
+}
+
+/* 第2セクション以降は背景動画を隠す */
+.content-section {
+  position: relative;
+  background-color: #fff;
+}
+
+.mv-section {
+  position: relative;
 }
 
 .container {
@@ -182,7 +184,7 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 85vh;
+  height: calc(100svh - 73px);
   text-align: center;
 }
 
@@ -250,43 +252,6 @@ img {
 }
 
 /*--------------------------------
- Skill
----------------------------------*/
-.skill-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin-bottom: -50px;
-}
-
-.skill-item {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  width: 48%;
-  margin-bottom: 50px;
-}
-
-.skill-img {
-  width: 60px;
-  height: auto;
-  margin-right: 20px;
-}
-
-.skill-body {
-  flex: 1;
-}
-
-.skill-name {
-  margin-bottom: 10px;
-}
-
-.skill-text {
-  font-size: 14px;
-  line-height: 1.8;
-}
-
-/*--------------------------------
  About
 ---------------------------------*/
 .profile {
@@ -327,9 +292,6 @@ img {
   margin-right: 10px;
 }
 
-.contact-text {
-  margin-top: 10px;
-}
 /*--------------------------------
  ページトップ
 ---------------------------------*/
@@ -362,71 +324,11 @@ img {
   color: #797979;
 }
 
-/*--------------------------------
- 下層：Worksページ
----------------------------------*/
-.article {
-  padding: 80px 0;
-}
-
-.article-container {
-  max-width: 1040px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-.article-title {
-  margin-bottom: 30px;
-  text-align: center;
-}
-
-.article-body {
-  max-width: 720px;
-  margin: 0 auto;
-  margin-bottom: 80px;
-}
-
-.article-body h3 {
-  position: relative;
-  font-size: 18px;
-  margin-bottom: 5px;
-  padding-left: 1em;
-}
-
-.article-body h3:not(:first-child) {
-  margin-top: 50px;
-}
-
-.article-body h3::before {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 4px;
-  height: 100%;
-  content: "";
-  border-radius: 3px;
-  background-color: #333;
-}
-
-.article-body p {
-  font-size: 15px;
-  line-height: 1.8;
-  margin-bottom: 30px;
-}
-
-.home-link {
-  text-align: center;
-}
-
 /*media Queries 767
 ----------------------------------------------------*/
 @media screen and (max-width: 767px) {
   body {
     font-size: 14px;
-  }
-
-  .pc-only {
-    display: none;
   }
 
   .sp-only {
@@ -482,7 +384,7 @@ img {
 
   /*  メインビジュアル */
   .mv {
-    height: 75vh;
+    height: calc(100svh - 57px);
   }
 
   .mv-container {
@@ -521,30 +423,6 @@ img {
     margin-bottom: 30px;
   }
 
-  /* Skill */
-  .skill-list {
-    display: block;
-    margin-bottom: 0;
-  }
-
-  .skill-item {
-    width: 100%;
-    margin-bottom: 35px;
-  }
-
-  .skill-item:last-child {
-    margin-bottom: 0;
-  }
-
-  .skill-name {
-    margin-bottom: 5px;
-  }
-
-  .skill-text {
-    font-size: 13px;
-    line-height: 1.7;
-  }
-
   /* About */
   .profile {
     display: block;
@@ -570,25 +448,6 @@ img {
     align-items: center;
   }
 
-  /* 下層ページ */
-  .article {
-    padding: 50px 0;
-  }
-
-  .article-body h3 {
-    font-size: 16px;
-    padding-left: .8em;
-  }
-
-  .article-body h3:not(:first-child) {
-    margin-top: 30px;
-  }
-
-  .article-body p {
-    font-size: 14px;
-    line-height: 1.7;
-    margin-bottom: 20px;
-  }
   /*custom*/
   .yajyu {
     font-size: 30px;
