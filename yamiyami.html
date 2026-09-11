@@ -33,6 +33,12 @@
 <body>
   <main>
 <video src="img/priv.mp4" controls autoplay muted class="myVideo"></video>
+<script>
+    const backgroundVideo = document.querySelector('.myVideo');
+    backgroundVideo.muted = true;
+    backgroundVideo.defaultMuted = true;
+    backgroundVideo.playsInline = true;
+</script>
   </main>
   <script>
     if (sessionStorage.getItem('yamiyami-authenticated') !== 'true') {
