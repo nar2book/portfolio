@@ -47,8 +47,33 @@
     const setPlaybackRate = function () {
       backgroundVideo.playbackRate = Number(backgroundVideo.dataset.playbackRate) || 1;
     };
+
+    // WebKit (notably iOS Safari) only permits autoplay when these are set as
+    // properties before playback is requested.  The HTML attributes alone are
+    // not reliable after a page is restored from the back/forward cache.
+    backgroundVideo.muted = true;
+    backgroundVideo.defaultMuted = true;
+    backgroundVideo.playsInline = true;
+
+    const playBackgroundVideo = function () {
+      setPlaybackRate();
+      const playback = backgroundVideo.play();
+
+      // Autoplay can still be disabled by Low Power Mode or user settings. In
+      // that case, keep the poster image visible rather than surfacing an
+      // unhandled promise rejection.
+      if (playback !== undefined) {
+        playback.catch(function () {});
+      }
+    };
+
     setPlaybackRate();
     backgroundVideo.addEventListener('loadedmetadata', setPlaybackRate);
+    backgroundVideo.addEventListener('canplay', playBackgroundVideo, { once: true });
+    window.addEventListener('pageshow', playBackgroundVideo);
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden) playBackgroundVideo();
+    });
   </script>
 
   <div class="wrapper">
@@ -120,9 +145,9 @@
             </p>
             <p class="activity-list">
               ［学祭サークル］<br>
-              ・CBA ぶたび班・広報班・映像班<br>
-              ・Zenya 映像班<br>
-              ・2研 映像班<br>
+              ・CBA<br>
+              ・Zenya<br>
+              ・2研<br>
               ・5研 Web班(班長)<br>
               ・火祭り<br>
 
