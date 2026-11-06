@@ -253,6 +253,60 @@ img {
 }
 
 /*--------------------------------
+ Selected works
+---------------------------------*/
+.featured-works-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.featured-work {
+  overflow: hidden;
+  color: #333;
+  background: #fff;
+  border: 1px solid #e6e6e6;
+}
+
+.featured-work-img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.featured-work-body {
+  padding: 16px 18px;
+}
+
+.featured-work-meta {
+  margin-bottom: 6px;
+  font-size: 11px;
+  color: #666;
+}
+
+.featured-work-title {
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.featured-works-empty {
+  grid-column: 1 / -1;
+  padding: 30px;
+  text-align: center;
+}
+
+.featured-works-more {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.featured-works-more a {
+  display: inline-block;
+  color: #333;
+  border-bottom: 1px solid currentColor;
+}
+
+/*--------------------------------
  About
 ---------------------------------*/
 .profile {
@@ -386,6 +440,30 @@ img {
   font-family: "IBM Plex Sans", sans-serif;
   font-size: 34px;
   text-align: center;
+}
+
+.portfolio_filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.portfolio_filter {
+  padding: 8px 16px;
+  color: #333;
+  background: transparent;
+  border: 1px solid #aaa;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.portfolio_filter.is-active,
+.portfolio_filter:hover {
+  color: #fff;
+  background: #333;
+  border-color: #333;
 }
 
 .portfolio_works_list {
@@ -539,6 +617,11 @@ img {
     margin-bottom: 30px;
   }
 
+  .featured-works-list {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
   /* About */
   .profile {
     display: block;
@@ -599,6 +682,9 @@ img {
   .portfolio_works_title {
     margin-bottom: 28px;
     font-size: 28px;
+  }
+  .portfolio_filters {
+    margin-bottom: 24px;
   }
   .portfolio_works_list {
     grid-template-columns: 1fr;

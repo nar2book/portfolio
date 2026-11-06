@@ -67,6 +67,7 @@
   <div class="portfolio_works_inner">
     <p class="portfolio_works_eyebrow">Selected works</p>
     <h2 class="portfolio_works_title">Works</h2>
+    <div class="portfolio_filters" id="portfolio-filters" aria-label="作品カテゴリーで絞り込み"></div>
     <div class="portfolio_works_list" id="portfolio-works-list" aria-live="polite">
       <p class="portfolio_works_empty">作品は順次追加予定です。</p>
     </div>
@@ -76,6 +77,9 @@
 <script>
   (() => {
     const portfolioWorksList = document.getElementById('portfolio-works-list');
+    const portfolioFilters = document.getElementById('portfolio-filters');
+
+    const categoryFor = (work) => work.category || 'その他';
 
     const makeWorkItem = (work) => {
       const wrapper = document.createElement('article');
@@ -122,6 +126,51 @@
       return wrapper;
     };
 
+    const makeEmptyState = () => {
+      const empty = document.createElement('p');
+      empty.className = 'portfolio_works_empty';
+      empty.textContent = '該当する作品はありません。';
+      return empty;
+    };
+
+    const renderWorks = (works, category) => {
+      const filteredWorks = category === 'all'
+        ? works
+        : works.filter((work) => categoryFor(work) === category);
+      portfolioWorksList.replaceChildren(
+        ...(filteredWorks.length ? filteredWorks.map(makeWorkItem) : [makeEmptyState()])
+      );
+    };
+
+    const renderFilters = (works) => {
+      const categories = [...new Set(works.map(categoryFor))];
+      const filterOptions = [['all', 'すべて'], ...categories.map((category) => [category, category])];
+      let activeCategory = 'all';
+
+      const update = () => {
+        [...portfolioFilters.children].forEach((button) => {
+          const isActive = button.dataset.category === activeCategory;
+          button.classList.toggle('is-active', isActive);
+          button.setAttribute('aria-pressed', String(isActive));
+        });
+        renderWorks(works, activeCategory);
+      };
+
+      portfolioFilters.replaceChildren(...filterOptions.map(([category, label]) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'portfolio_filter';
+        button.dataset.category = category;
+        button.textContent = label;
+        button.addEventListener('click', () => {
+          activeCategory = category;
+          update();
+        });
+        return button;
+      }));
+      update();
+    };
+
     fetch('data/portfolio.json')
       .then((response) => {
         if (!response.ok) throw new Error('Portfolio data could not be loaded.');
@@ -135,8 +184,7 @@
 
         if (!Array.isArray(data.works)) return;
 
-        if (data.works.length === 0) return;
-        portfolioWorksList.replaceChildren(...data.works.map(makeWorkItem));
+        renderFilters(data.works);
       })
       .catch(() => {
         // The static empty state remains visible when the JSON file is unavailable.

@@ -127,7 +127,72 @@
           border-radius: 10px;
         }
       </style>
-      <!-- Section 2: works -->
+      <!-- Selected works -->
+      <section class="section featured-works" id="featured-works">
+        <div class="container">
+          <h2 class="title">Selected Works</h2>
+          <div class="featured-works-list" id="featured-works-list" aria-live="polite">
+            <p class="featured-works-empty">作品を読み込んでいます。</p>
+          </div>
+          <p class="featured-works-more"><a href="portfolio.html#portfolio-works">すべての作品を見る</a></p>
+        </div>
+      </section>
+      <script>
+        (() => {
+          const featuredWorksList = document.getElementById('featured-works-list');
+
+          const makeFeaturedWork = (work) => {
+            const link = document.createElement('a');
+            link.className = 'featured-work';
+            link.href = work.url || 'portfolio.html#portfolio-works';
+
+            if (work.image) {
+              const image = document.createElement('img');
+              image.className = 'featured-work-img';
+              image.src = work.image;
+              image.alt = work.image_alt || work.title || '';
+              image.loading = 'lazy';
+              link.append(image);
+            }
+
+            const body = document.createElement('div');
+            body.className = 'featured-work-body';
+
+            const meta = [work.category, work.year].filter(Boolean).join(' · ');
+            if (meta) {
+              const metaElement = document.createElement('p');
+              metaElement.className = 'featured-work-meta';
+              metaElement.textContent = meta;
+              body.append(metaElement);
+            }
+
+            const title = document.createElement('h3');
+            title.className = 'featured-work-title';
+            title.textContent = work.title || '';
+            body.append(title);
+
+            link.append(body);
+            return link;
+          };
+
+          fetch('data/portfolio.json')
+            .then((response) => {
+              if (!response.ok) throw new Error('Featured works could not be loaded.');
+              return response.json();
+            })
+            .then((data) => {
+              if (!Array.isArray(data.works) || data.works.length === 0) {
+                featuredWorksList.textContent = '掲載作品は準備中です。';
+                return;
+              }
+              featuredWorksList.replaceChildren(...data.works.slice(0, 3).map(makeFeaturedWork));
+            })
+            .catch(() => {
+              featuredWorksList.textContent = '作品を読み込めませんでした。';
+            });
+        })();
+      </script>
+      <!-- Section 2: activities -->
       <section class="section content-section" id="works">
         <div class="container">
           <h2 class="mv-subtitle">活動について</h2>
@@ -155,7 +220,7 @@
               <br>
               【個人活動】<br>
               BlenderやAfterEffects、Cinema4Dを用いた映像制作、3DCG制作などを行っています。<br>
-              Portfolioはこちら(準備中)
+              <a href="portfolio.html#portfolio-works">Portfolioはこちら</a>
 
 
             </p>
