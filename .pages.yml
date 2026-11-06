@@ -56,6 +56,10 @@ content:
             label: 説明
             type: text
             required: false
+          - name: details
+            label: 詳細本文
+            type: text
+            required: false
           - name: url
             label: 作品ページURL
             type: string

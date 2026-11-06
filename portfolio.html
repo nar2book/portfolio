@@ -74,20 +74,70 @@
   </div>
 </section>
 
+<dialog class="portfolio_modal" id="portfolio-modal" aria-labelledby="portfolio-modal-title">
+  <div class="portfolio_modal_inner">
+    <form method="dialog" class="portfolio_modal_close_form">
+      <button class="portfolio_modal_close" type="submit" aria-label="詳細を閉じる">×</button>
+    </form>
+    <img class="portfolio_modal_img" id="portfolio-modal-image" src="" alt="" hidden>
+    <p class="portfolio_modal_meta" id="portfolio-modal-meta"></p>
+    <h2 class="portfolio_modal_title" id="portfolio-modal-title"></h2>
+    <p class="portfolio_modal_description" id="portfolio-modal-description"></p>
+    <a class="portfolio_modal_link" id="portfolio-modal-link" href="" hidden>作品ページを見る →</a>
+  </div>
+</dialog>
+
 <script>
   (() => {
     const portfolioWorksList = document.getElementById('portfolio-works-list');
     const portfolioFilters = document.getElementById('portfolio-filters');
+    const portfolioModal = document.getElementById('portfolio-modal');
+    const modalImage = document.getElementById('portfolio-modal-image');
+    const modalMeta = document.getElementById('portfolio-modal-meta');
+    const modalTitle = document.getElementById('portfolio-modal-title');
+    const modalDescription = document.getElementById('portfolio-modal-description');
+    const modalLink = document.getElementById('portfolio-modal-link');
 
     const categoryFor = (work) => work.category || 'その他';
+
+    const openWorkModal = (work) => {
+      const meta = [work.category, work.year].filter(Boolean).join(' · ');
+      modalTitle.textContent = work.title || '';
+      modalMeta.textContent = meta;
+      modalMeta.hidden = !meta;
+      modalDescription.textContent = work.details || work.description || '';
+      modalDescription.hidden = !modalDescription.textContent;
+
+      if (work.image) {
+        modalImage.src = work.image;
+        modalImage.alt = work.image_alt || work.title || '';
+        modalImage.hidden = false;
+      } else {
+        modalImage.removeAttribute('src');
+        modalImage.alt = '';
+        modalImage.hidden = true;
+      }
+
+      if (work.url) {
+        modalLink.href = work.url;
+        modalLink.hidden = false;
+      } else {
+        modalLink.removeAttribute('href');
+        modalLink.hidden = true;
+      }
+
+      portfolioModal.showModal();
+    };
 
     const makeWorkItem = (work) => {
       const wrapper = document.createElement('article');
       wrapper.className = 'portfolio_work';
 
-      const content = work.url ? document.createElement('a') : document.createElement('div');
+      const content = document.createElement('button');
+      content.type = 'button';
       content.className = 'portfolio_work_link';
-      if (work.url) content.href = work.url;
+      content.setAttribute('aria-label', `${work.title || '作品'}の詳細を見る`);
+      content.addEventListener('click', () => openWorkModal(work));
 
       if (work.image) {
         const image = document.createElement('img');
@@ -170,6 +220,10 @@
       }));
       update();
     };
+
+    portfolioModal.addEventListener('click', (event) => {
+      if (event.target === portfolioModal) portfolioModal.close();
+    });
 
     fetch('data/portfolio.json')
       .then((response) => {
