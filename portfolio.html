@@ -74,7 +74,7 @@
   </div>
 </section>
 
-<div class="portfolio_modal" id="portfolio-modal" role="dialog" aria-modal="true" aria-labelledby="portfolio-modal-title" hidden>
+<dialog class="portfolio_modal" id="portfolio-modal" aria-labelledby="portfolio-modal-title">
   <div class="portfolio_modal_inner">
     <button class="portfolio_modal_close" id="portfolio-modal-close" type="button" aria-label="詳細を閉じる">×</button>
     <img class="portfolio_modal_img" id="portfolio-modal-image" src="" alt="" hidden>
@@ -83,7 +83,7 @@
     <p class="portfolio_modal_description" id="portfolio-modal-description"></p>
     <a class="portfolio_modal_link" id="portfolio-modal-link" href="" hidden>作品ページを見る →</a>
   </div>
-</div>
+</dialog>
 
 <script>
   (() => {
@@ -125,13 +125,11 @@
         modalLink.hidden = true;
       }
 
-      portfolioModal.hidden = false;
-      document.body.classList.add('is-modal-open');
+      portfolioModal.showModal();
     };
 
     const closeWorkModal = () => {
-      portfolioModal.hidden = true;
-      document.body.classList.remove('is-modal-open');
+      portfolioModal.close();
     };
 
     const makeWorkItem = (work) => {
@@ -231,7 +229,7 @@
     });
     modalClose.addEventListener('click', closeWorkModal);
     document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && !portfolioModal.hidden) closeWorkModal();
+      if (event.key === 'Escape' && portfolioModal.open) closeWorkModal();
     });
 
     fetch('data/portfolio.json')

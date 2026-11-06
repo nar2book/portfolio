@@ -530,23 +530,26 @@ img {
 
 .portfolio_modal {
   position: fixed;
-  z-index: 10;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  padding: 16px;
-  overflow-y: auto;
+  top: 50%;
+  left: 50%;
+  width: min(720px, calc(100% - 32px));
+  max-height: calc(100% - 32px);
+  padding: 0;
+  margin: 0;
+  overflow: auto;
+  color: #333;
+  background: #fff;
+  border: 0;
+  transform: translate(-50%, -50%);
+}
+
+.portfolio_modal::backdrop {
   background: rgba(0, 0, 0, .6);
 }
 
 .portfolio_modal_inner {
   position: relative;
-  width: min(720px, 100%);
-  max-height: 100%;
   padding: 40px;
-  overflow-y: auto;
-  color: #333;
-  background: #fff;
 }
 
 .portfolio_modal_close {
