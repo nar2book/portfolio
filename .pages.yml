@@ -60,6 +60,11 @@ content:
             label: 詳細本文
             type: text
             required: false
+          - name: applications
+            label: 使用アプリケーション
+            type: string
+            list: true
+            required: false
           - name: url
             label: 作品ページURL
             type: string

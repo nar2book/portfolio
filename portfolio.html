@@ -81,6 +81,10 @@
     <p class="portfolio_modal_meta" id="portfolio-modal-meta"></p>
     <h2 class="portfolio_modal_title" id="portfolio-modal-title"></h2>
     <p class="portfolio_modal_description" id="portfolio-modal-description"></p>
+    <div class="portfolio_modal_applications" id="portfolio-modal-applications" hidden>
+      <p class="portfolio_applications_label">使用アプリケーション</p>
+      <ul class="portfolio_applications_list" id="portfolio-modal-applications-list"></ul>
+    </div>
     <a class="portfolio_modal_link" id="portfolio-modal-link" href="" hidden>作品ページを見る →</a>
   </div>
 </dialog>
@@ -95,9 +99,21 @@
     const modalMeta = document.getElementById('portfolio-modal-meta');
     const modalTitle = document.getElementById('portfolio-modal-title');
     const modalDescription = document.getElementById('portfolio-modal-description');
+    const modalApplications = document.getElementById('portfolio-modal-applications');
+    const modalApplicationsList = document.getElementById('portfolio-modal-applications-list');
     const modalLink = document.getElementById('portfolio-modal-link');
 
     const categoryFor = (work) => work.category || 'その他';
+    const applicationsFor = (work) => Array.isArray(work.applications)
+      ? work.applications.filter(Boolean)
+      : [];
+
+    const makeApplicationList = (applications) => applications.map((application) => {
+      const item = document.createElement('li');
+      item.className = 'portfolio_application';
+      item.textContent = application;
+      return item;
+    });
 
     const openWorkModal = (work) => {
       const meta = [work.category, work.year].filter(Boolean).join(' · ');
@@ -106,6 +122,10 @@
       modalMeta.hidden = !meta;
       modalDescription.textContent = work.details || work.description || '';
       modalDescription.hidden = !modalDescription.textContent;
+
+      const applications = applicationsFor(work);
+      modalApplications.hidden = applications.length === 0;
+      modalApplicationsList.replaceChildren(...makeApplicationList(applications));
 
       if (work.image) {
         modalImage.src = work.image;
@@ -172,6 +192,23 @@
         description.className = 'portfolio_work_description';
         description.textContent = work.description;
         body.append(description);
+      }
+
+      const applications = applicationsFor(work);
+      if (applications.length) {
+        const applicationsContainer = document.createElement('div');
+        applicationsContainer.className = 'portfolio_work_applications';
+
+        const label = document.createElement('p');
+        label.className = 'portfolio_applications_label';
+        label.textContent = '使用アプリケーション';
+        applicationsContainer.append(label);
+
+        const list = document.createElement('ul');
+        list.className = 'portfolio_applications_list';
+        list.append(...makeApplicationList(applications));
+        applicationsContainer.append(list);
+        body.append(applicationsContainer);
       }
 
       content.append(body);

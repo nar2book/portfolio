@@ -520,6 +520,31 @@ img {
   line-height: 1.7;
 }
 
+.portfolio_work_applications {
+  margin-top: 16px;
+}
+
+.portfolio_applications_label {
+  margin-bottom: 8px;
+  font-size: 11px;
+  color: #666;
+}
+
+.portfolio_applications_list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.portfolio_application {
+  padding: 4px 8px;
+  font-size: 11px;
+  line-height: 1.3;
+  color: #333;
+  background: #f1f1f1;
+  border-radius: 999px;
+}
+
 .portfolio_works_empty {
   grid-column: 1 / -1;
   padding: 48px 20px;
@@ -592,6 +617,10 @@ img {
   margin-top: 18px;
   line-height: 1.8;
   white-space: pre-wrap;
+}
+
+.portfolio_modal_applications {
+  margin-top: 24px;
 }
 
 .portfolio_modal_link {
