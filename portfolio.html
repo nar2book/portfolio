@@ -74,24 +74,23 @@
   </div>
 </section>
 
-<dialog class="portfolio_modal" id="portfolio-modal" aria-labelledby="portfolio-modal-title">
+<div class="portfolio_modal" id="portfolio-modal" role="dialog" aria-modal="true" aria-labelledby="portfolio-modal-title" hidden>
   <div class="portfolio_modal_inner">
-    <form method="dialog" class="portfolio_modal_close_form">
-      <button class="portfolio_modal_close" type="submit" aria-label="詳細を閉じる">×</button>
-    </form>
+    <button class="portfolio_modal_close" id="portfolio-modal-close" type="button" aria-label="詳細を閉じる">×</button>
     <img class="portfolio_modal_img" id="portfolio-modal-image" src="" alt="" hidden>
     <p class="portfolio_modal_meta" id="portfolio-modal-meta"></p>
     <h2 class="portfolio_modal_title" id="portfolio-modal-title"></h2>
     <p class="portfolio_modal_description" id="portfolio-modal-description"></p>
     <a class="portfolio_modal_link" id="portfolio-modal-link" href="" hidden>作品ページを見る →</a>
   </div>
-</dialog>
+</div>
 
 <script>
   (() => {
     const portfolioWorksList = document.getElementById('portfolio-works-list');
     const portfolioFilters = document.getElementById('portfolio-filters');
     const portfolioModal = document.getElementById('portfolio-modal');
+    const modalClose = document.getElementById('portfolio-modal-close');
     const modalImage = document.getElementById('portfolio-modal-image');
     const modalMeta = document.getElementById('portfolio-modal-meta');
     const modalTitle = document.getElementById('portfolio-modal-title');
@@ -126,7 +125,13 @@
         modalLink.hidden = true;
       }
 
-      portfolioModal.showModal();
+      portfolioModal.hidden = false;
+      document.body.classList.add('is-modal-open');
+    };
+
+    const closeWorkModal = () => {
+      portfolioModal.hidden = true;
+      document.body.classList.remove('is-modal-open');
     };
 
     const makeWorkItem = (work) => {
@@ -222,7 +227,11 @@
     };
 
     portfolioModal.addEventListener('click', (event) => {
-      if (event.target === portfolioModal) portfolioModal.close();
+      if (event.target === portfolioModal) closeWorkModal();
+    });
+    modalClose.addEventListener('click', closeWorkModal);
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !portfolioModal.hidden) closeWorkModal();
     });
 
     fetch('data/portfolio.json')

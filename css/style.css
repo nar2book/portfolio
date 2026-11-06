@@ -256,7 +256,7 @@ img {
  Selected works
 ---------------------------------*/
 .featured-works {
-  background-color: #fff !important;
+  padding-top: 90px;
 }
 
 .featured-works-list {
@@ -529,30 +529,30 @@ img {
 }
 
 .portfolio_modal {
-  width: min(720px, calc(100% - 32px));
-  max-height: calc(100% - 32px);
-  padding: 0;
-  color: #333;
-  background: #fff;
-  border: 0;
-}
-
-.portfolio_modal::backdrop {
+  position: fixed;
+  z-index: 10;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  overflow-y: auto;
   background: rgba(0, 0, 0, .6);
 }
 
 .portfolio_modal_inner {
   position: relative;
+  width: min(720px, 100%);
+  max-height: 100%;
   padding: 40px;
-}
-
-.portfolio_modal_close_form {
-  position: absolute;
-  top: 12px;
-  right: 12px;
+  overflow-y: auto;
+  color: #333;
+  background: #fff;
 }
 
 .portfolio_modal_close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
   display: grid;
   width: 36px;
   height: 36px;
@@ -705,6 +705,9 @@ img {
   .featured-works-list {
     grid-template-columns: 1fr;
     gap: 20px;
+  }
+  .featured-works {
+    padding-top: 60px;
   }
 
   /* About */
