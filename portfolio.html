@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="hatoのポートフォリオサイト。CG・映像制作を中心に活動しています。">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#111111">
+  <link rel="canonical" href="https://hatoha.to/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="hato">
+  <meta property="og:title" content="hato | hato | Portfolio">
+  <meta property="og:description" content="CG・映像制作を中心に活動するhatoのポートフォリオサイトです。">
+  <meta property="og:url" content="https://hatoha.to/">
+  <meta property="og:image" content="https://hatoha.to/img/ogp.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="hato Portfolio">
+  <meta name="twitter:description" content="CG・映像制作を中心に活動するhatoのポートフォリオサイトです。">
+  <meta name="twitter:image" content="https://hatoha.to/img/ogp.png">
+  <title>hato | Portfolio</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Material+Icons+Outlined" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Noto+Serif+JP:wght@200..900&display=swap" rel="stylesheet">  <link href="css/ress.css" media="all" rel="stylesheet" type="text/css" />
+  <link href="css/style.css" media="all" rel="stylesheet" type="text/css" />
+  <link rel="shortcut icon" href="img/favicon.ico" />
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "hato",
+      "url": "https://hatoha.to/",
+      "description": "九州大学芸術工学部でCG・映像制作を中心に活動するクリエイター"
+    }
+  </script>
+</head>
+<body>
+    <!-- header -->
+    <header class="header ">
+      <div class="container">
+        <h1 class="header-logo">
+          <a href=".">hato</a>
+        </h1>
+        <p>自己紹介的なサイト</p>
+        <nav class="gnav">
+          <ul class="gnav-list">
+            <li class="gnav-item"><a href="index.html#/#works">活動について</a></li>
+            <li class="gnav-item"><a href="index.html#/#SNS">リンク集</a></li>
+            <li class="gnav-item"><a href="portfolio.html">Portfolio</a></li>
+            <li class="gnav-item"><a href="login.html">　</a></li>
+            
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+<section id="portfolio_head" class="portfolio_head">
+  <div class="portfolio_head_inner">
+    <h1 class="portfolio_head_title">hato Portfolio</h1>
+    <p class="portfolio_head_subtitle">軌跡</p>
+    <p class="portfolio_head_subtitle_2">the career trajectory</p>
+  </div>
+</section>
+
+<section class="portfolio_works" id="portfolio-works">
+  <div class="portfolio_works_inner">
+    <p class="portfolio_works_eyebrow">Selected works</p>
+    <h2 class="portfolio_works_title">Works</h2>
+    <div class="portfolio_works_list" id="portfolio-works-list" aria-live="polite">
+      <p class="portfolio_works_empty">作品は順次追加予定です。</p>
+    </div>
+  </div>
+</section>
+<script>
+  (() => {
+    const portfolioWorksList = document.getElementById('portfolio-works-list');
+
+    const makeWorkItem = (work) => {
+      const wrapper = document.createElement('article');
+      wrapper.className = 'portfolio_work';
+
+      const content = work.url ? document.createElement('a') : document.createElement('div');
+      content.className = 'portfolio_work_link';
+      if (work.url) content.href = work.url;
+
+      if (work.image) {
+        const image = document.createElement('img');
+        image.className = 'portfolio_work_img';
+        image.src = work.image;
+        image.alt = work.image_alt || work.title || '';
+        image.loading = 'lazy';
+        content.append(image);
+      }
+
+      const body = document.createElement('div');
+      body.className = 'portfolio_work_body';
+
+      const meta = [work.category, work.year].filter(Boolean).join(' · ');
+      if (meta) {
+        const metaElement = document.createElement('p');
+        metaElement.className = 'portfolio_work_meta';
+        metaElement.textContent = meta;
+        body.append(metaElement);
+      }
+
+      const title = document.createElement('h3');
+      title.className = 'portfolio_work_title';
+      title.textContent = work.title || '';
+      body.append(title);
+
+      if (work.description) {
+        const description = document.createElement('p');
+        description.className = 'portfolio_work_description';
+        description.textContent = work.description;
+        body.append(description);
+      }
+
+      content.append(body);
+      wrapper.append(content);
+      return wrapper;
+    };
+
+    const makeEmptyState = () => {
+      const empty = document.createElement('p');
+      empty.className = 'portfolio_works_empty';
+      empty.textContent = '作品は順次追加予定です。';
+      return empty;
+    };
+
+    fetch('data/portfolio.json')
+      .then((response) => {
+        if (!response.ok) throw new Error('Portfolio data could not be loaded.');
+        return response.json();
+      })
+      .then((data) => {
+        const heading = data.heading || {};
+        document.querySelector('.portfolio_head_title').textContent = heading.title || 'hato Portfolio';
+        document.querySelector('.portfolio_head_subtitle').textContent = heading.subtitle || '';
+        document.querySelector('.portfolio_head_subtitle_2').textContent = heading.tagline || '';
+
+        if (Array.isArray(data.works)) {
+          portfolioWorksList.replaceChildren(
+            ...(data.works.length ? data.works.map(makeWorkItem) : [makeEmptyState()])
+          );
+        }
+      })
+      .catch(() => {
+        // The HTML above remains visible if the JSON file is temporarily unavailable.
+      });
+  })();
+</script>
+</body>
+</html>

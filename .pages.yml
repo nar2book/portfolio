@@ -1,0 +1,62 @@
+media:
+  input: img/uploads
+  output: /img/uploads
+  rename: safe
+  extensions: [jpg, jpeg, png, webp]
+
+content:
+  - name: portfolio
+    label: ポートフォリオ
+    type: file
+    path: data/portfolio.json
+    format: json
+    fields:
+      - name: heading
+        label: 見出し
+        type: object
+        fields:
+          - name: title
+            label: タイトル
+            type: string
+          - name: subtitle
+            label: サブタイトル
+            type: string
+          - name: tagline
+            label: 英語サブタイトル
+            type: string
+            required: false
+      - name: works
+        label: 作品
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{title}"
+        fields:
+          - name: title
+            label: 作品タイトル
+            type: string
+          - name: category
+            label: カテゴリー
+            type: string
+            required: false
+          - name: year
+            label: 制作年
+            type: string
+            required: false
+          - name: image
+            label: サムネイル画像
+            type: image
+            required: false
+          - name: image_alt
+            label: 画像の説明
+            type: string
+            required: false
+          - name: description
+            label: 説明
+            type: text
+            required: false
+          - name: url
+            label: 作品ページURL
+            type: string
+            required: false
