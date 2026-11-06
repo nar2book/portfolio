@@ -530,8 +530,7 @@ img {
 
 .portfolio_modal {
   position: fixed;
-  top: 50%;
-  left: 50%;
+  inset: 50% auto auto 50%;
   width: min(720px, calc(100% - 32px));
   max-height: calc(100% - 32px);
   padding: 0;
