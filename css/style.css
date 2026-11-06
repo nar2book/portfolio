@@ -255,6 +255,10 @@ img {
 /*--------------------------------
  Selected works
 ---------------------------------*/
+.featured-works {
+  background-color: #fff !important;
+}
+
 .featured-works-list {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
