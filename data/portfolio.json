@@ -17,6 +17,19 @@
         "After Effects",
         "Trapcode Particular"
       ]
+    },
+    {
+      "title": "芸工祭2026 ホームページ",
+      "category": "Web",
+      "year": "2026",
+      "image": "/img/uploads/geikosai26hp.png",
+      "image_alt": "HPのスクショ",
+      "description": "芸工祭ホームページの一部デザインと実装を行いました",
+      "details": "芸工祭ホームページの一部デザインと実装を行いました",
+      "applications": [
+        "React"
+      ],
+      "url": "https://geikosai.com"
     }
   ]
 }
